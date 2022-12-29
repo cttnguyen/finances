@@ -1,0 +1,17 @@
+Package: finances
+Title: Luckett Finances
+Version: 0.0.0.9000
+Authors@R: 
+  - person("Crystal", "Luckett", "T", "cnguyen6292@gmail.com", role = c("aut", "cre"))
+  - person("Daniel", "Luckett", "J", "daniel.j.luckett@gmail.com", role = c("aut""cre"))
+Description: A Shiny application that tracks monthly expenses, utilities, and savings contributions. Will also track progress toward retirement.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.0.0
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true
