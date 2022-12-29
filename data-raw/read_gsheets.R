@@ -9,6 +9,16 @@ var_names <- gnames %>%
   tolower() %>% 
   str_replace(" ", "_")
 
+format_notes <- function(notes){
+  as.character(notes) %>% #if all values are missing, could be read in as logical
+    replace_na("") %>%  
+    str_split("; ") %>% #break out multiple notes into multiple lines and format as sentence
+    map_chr(
+      ~str_to_sentence(.) %>% 
+        paste0(collapse = "<br>")
+    )
+}
+
 map2(
   gnames,
   var_names,
@@ -18,10 +28,7 @@ map2(
       sheet = gname
     ) %>% 
       mutate_if(lubridate::is.POSIXct, as.Date) %>% 
-      mutate(
-        notes = replace_na(notes, ""),
-        notes = str_replace_all("; ", "<br>")
-      ) %>% 
+      mutate(notes = format_notes(notes = notes)) %>% 
       assign(x = var_name, envir = .GlobalEnv)
     
     do.call("use_data", 
