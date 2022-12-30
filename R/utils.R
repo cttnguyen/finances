@@ -1,11 +1,12 @@
 #For small simple functions
-today <- rollback(today(), roll_to_first = TRUE)
-if(month(today) < 3){
-  default_date_range <- rollback(c(today - 365, today), roll_to_first = TRUE)
-} else {
-  default_date_range <- c(floor_date(today, unit = "year"), today)
+today <- function(){rollback(lubridate::today(), roll_to_first = TRUE)}
+default_date_range <- function(){
+  if(month(today()) < 3){
+    rollback(c(today() - 365, today()), roll_to_first = TRUE)
+  } else {
+    default_date_range <- c(floor_date(today(), unit = "year"), today())
+  }
 }
-
 
 count_months <- function(date_range){
   date_range %>% 

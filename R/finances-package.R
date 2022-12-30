@@ -5,5 +5,13 @@
 #' @importFrom magrittr %>%
 #' @importFrom conflicted conflict_prefer
 #' @importFrom usethis use_data
-#' @importFrom lubridate is.Date
 #' @import dplyr tibble tidyr readr purrr stringr
+#' @import shiny 
+#' @import shinydashboard  
+#' @import shinydashboardPlus  
+#' @import shinycssloaders  
+#' @import htmlwidgets  
+#' @import shinyWidgets  
+#' @import shinyjs
+#' @import lubridate
+#' @import plotly

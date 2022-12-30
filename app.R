@@ -27,7 +27,7 @@ here::here("data") %>%
 
 ui <- dashboardPage(
   header = dashboardHeader(title = "Luckett Finances"),
-  sidebar = dbSide,
+  sidebar = dbSide(),
   body = dashboardBody(
     useShinyjs(),
     tabItems(

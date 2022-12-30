@@ -15,7 +15,7 @@ dateUI <- function(id) {
             NS(id, "month_custom1"),
             label = "From:",
             minDate = as.Date("2021-01-01"),
-            maxDate = today,
+            maxDate = today(),
             view = "months",
             minView = "months",
             addon = "none"
@@ -29,7 +29,7 @@ dateUI <- function(id) {
             NS(id, "month_custom2"),
             label = "To:",
             minDate = as.Date("2021-01-01"),
-            maxDate = today,
+            maxDate = today(),
             view = "months",
             minView = "months",
             addon = "none"
@@ -79,8 +79,8 @@ dateServer <- function(id, data) {
       
       date_range <- reactive({
         
-        YTD <- c(floor_date(today, unit = "year"), today)
-        CY <- c(today - 365, today)
+        YTD <- c(floor_date(today(), unit = "year"), today())
+        CY <- c(today() - 365, today())
         
         if(input$month_select == "Custom"){
           custom <- c(input$month_custom1, input$month_custom2)
