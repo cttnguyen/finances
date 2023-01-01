@@ -33,7 +33,8 @@ ui <- dashboardPage(
     tabItems(
       credit_cardsUI("credit_cards"),
       savingsUI("savings"),
-      utilitiesUI("utilities")
+      utilitiesUI("utilities"),
+      mortgageUI("mortgage")
     )
   ),
   title = "Luckett Finances"
@@ -44,6 +45,8 @@ server <- shinyServer(function(input, output, session) {
   credit_cardsServer("credit_cards")
   savingsServer("savings")
   utilitiesServer("utilities")
+  mortgageServer("mortgage")
+  
   session$onSessionEnded(
     function() {
       stopApp()

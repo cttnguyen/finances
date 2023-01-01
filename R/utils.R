@@ -1,18 +1,11 @@
 #For small simple functions
-today <- function(){rollback(lubridate::today(), roll_to_first = TRUE)}
+this_month <- function(){rollback(lubridate::today(), roll_to_first = TRUE)}
 default_date_range <- function(){
-  if(month(today()) < 3){
-    rollback(c(today() - 365, today()), roll_to_first = TRUE)
+  if(month(this_month()) < 3){
+    rollback(c(this_month() - 365, this_month()), roll_to_first = TRUE)
   } else {
-    default_date_range <- c(floor_date(today(), unit = "year"), today())
+    default_date_range <- c(floor_date(this_month(), unit = "year"), this_month())
   }
-}
-
-count_months <- function(date_range){
-  date_range %>% 
-    int_diff %/%
-    months(1) +
-    1
 }
 
 format_time_axis <- function(plotlyObj, date_range){
@@ -23,11 +16,20 @@ format_time_axis <- function(plotlyObj, date_range){
         title = list(
           text = "Date"
         ),
+        type = "date",
         range = date_range,
         tick0 = date_range[1],
-        nticks = count_months(date_range),
         tickangle = -45,
-        tickformat = "%b %Y"
+        tickformatstops = list(
+          list(
+            dtickrange = list(NULL, "M12"),
+            value = "%b %Y"
+          ),
+          list(
+            dtickrange = list("M12", NULL),
+            value = "%Y Y"
+          )
+        )
       )
     )
   
@@ -69,4 +71,38 @@ var_to_title <- function(varname){
   varname %>% 
     str_replace_all("_", " ") %>% 
     str_to_title()
+}
+
+mortgage_balance <- function(original_loan, rate, n_payments, payment_amt, tax_rate, insurance, pmi, assessed_value, other){
+  
+  monthly_payment <- payment_amt - (((assessed_value * tax_rate) + insurance + (pmi * original_loan) + other) / 12)
+  
+  r <- rate / 12
+  
+  (original_loan * (1 + r) ** n_payments) - 
+    (monthly_payment * (((1 + r) ** n_payments) - 1) / r)
+}
+
+columns <- function(num_cols = 2, ...){
+  checkmate::assertIntegerish(
+    x = num_cols,
+    lower = 2,
+    upper = 12,
+    any.missing = FALSE,
+    all.missing = FALSE,
+    len = 1
+  )
+  
+  content = tagList(...)
+  width = 12 / num_cols
+  
+    map(
+      content,
+      ~ column(
+        width = width,
+        .x
+      )
+    ) %>% 
+      fluidRow()
+  
 }
