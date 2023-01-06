@@ -42,6 +42,9 @@ linePlotServer <- function(id, data, date_range, addl_traces = list()) {
 
 linePlot <- function(data, date_var, addl_traces = list()){
   plotlyObj <- data %>% 
+    {if(!"notes" %in% names(data)){
+      mutate(., notes = "")
+    } else .} %>% 
     plot_ly(
       type = "scatter",
       mode = "lines",
